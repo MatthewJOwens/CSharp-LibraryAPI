@@ -5,13 +5,13 @@ namespace LibraryAPI
 {
   public class Book
   {
-    public Book(string title, string author, string descrition)
+    public Book(string title, string author, string descrition, int id)
     {
       Title = title;
       Author = author;
       Available = true;
       Description = descrition;
-      Id = Guid.NewGuid().ToString();
+      Id = id;
     }
     //Properties
 
@@ -27,6 +27,6 @@ namespace LibraryAPI
     [Required]
     // [Range(1, 100)]
     public bool Available { get; set; }
-    public string Id { get; set; }
+    public int Id { get; set; }
   }
 }

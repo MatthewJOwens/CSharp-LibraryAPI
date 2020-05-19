@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using LibraryAPI.DB;
+using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAPI
@@ -9,12 +10,19 @@ namespace LibraryAPI
   [Route("/api/[controller]")]
   public class BooksController : ControllerBase
   {
+    private readonly BooksService _bs;
+
+    public BooksController(BooksService bs)
+    {
+      _bs = bs;
+    }
+
     [HttpGet]
     public ActionResult<IEnumerable<Book>> GetBooks()
     {
       try
       {
-        return Ok(FakeDB.Books);
+        return Ok(_bs.GetAll());
       }
       catch (System.Exception err)
       {
@@ -22,12 +30,12 @@ namespace LibraryAPI
       }
     }
 
-    [HttpGet("{bookId}")]
-    public ActionResult<Book> GetBook(string bookId)
+    [HttpGet("{id}")]
+    public ActionResult<Book> GetBook(int id)
     {
       try
       {
-        Book foundBook = FakeDB.Books.find(b => b.id == bookId);
+        Book foundBook = _bs.GetById(id);
         if (foundBook == null)
         {
           throw new Exception("Book not found");
@@ -45,8 +53,7 @@ namespace LibraryAPI
     {
       try
       {
-        FakeDB.Books.Add(newBook);
-        return Created($"api/books/{newBook.Id}", newBook);
+        return Ok(_bs.Add(newBook));
       }
       catch (System.Exception err)
       {
@@ -55,22 +62,18 @@ namespace LibraryAPI
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Book> Edit(string id, [FromBody] Book updatedBook)
+    public ActionResult<Book> Edit([FromBody] Book updatedBook)
     {
       try
       {
-        Book bookToUpdate = FakeDB.Books.Find(b => b.id == id);
-        if (bookToUpdate == null)
-        {
-          throw new Exception("Invalid ID");
-        }
-        //NOTE if this was not 'required'
-        bookToUpdate.Title = updatedBook.Title == null ? bookToUpdate.Title : updatedBook.Title;
-        bookToUpdate.Description = updatedBook.Description == null ? bookToUpdate.Description : updatedBook.Description;
-        bookToUpdate.Author = updatedBook.Author == null ? bookToUpdate.Author : updatedBook.Author;
-        //NOTE this says it will always be false because bool can't be null, but what is it if it's not included and not required?
-        bookToUpdate.Available = updatedBook.Available == null ? bookToUpdate.Available : updatedBook.Available;
-        return Ok(bookToUpdate);
+
+        // //NOTE if this was not 'required'
+        // bookToUpdate.Title = updatedBook.Title == null ? bookToUpdate.Title : updatedBook.Title;
+        // bookToUpdate.Description = updatedBook.Description == null ? bookToUpdate.Description : updatedBook.Description;
+        // bookToUpdate.Author = updatedBook.Author == null ? bookToUpdate.Author : updatedBook.Author;
+        // //NOTE this says it will always be false because bool can't be null, but what is it if it's not included and not required?
+        // bookToUpdate.Available = updatedBook.Available == null ? bookToUpdate.Available : updatedBook.Available;
+        return Ok(_bs.Update(updatedBook));
       }
       catch (System.Exception err)
       {
@@ -79,17 +82,11 @@ namespace LibraryAPI
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<string> Delete(string id)
+    public ActionResult<Book> Delete(int id)
     {
       try
       {
-        Book bookToDelete = FakeDB.Books.Find(b => b.Id == id);
-        if (bookToDelete == null)
-        {
-          throw new Exception("Invalid ID");
-        }
-        FakeDB.Books.Remove(bookToDelete);
-        return Ok("Deleted");
+        return Ok(_bs.Delete(id));
       }
       catch (System.Exception err)
       {
