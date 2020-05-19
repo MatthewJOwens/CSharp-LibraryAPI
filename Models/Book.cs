@@ -5,14 +5,15 @@ namespace LibraryAPI
 {
   public class Book
   {
-    public Book(string title, string author, string descrition, int id)
-    {
-      Title = title;
-      Author = author;
-      Available = true;
-      Description = descrition;
-      Id = id;
-    }
+    // public Book(string title, string author, string description, int id)
+    // {
+    //   Title = title;
+    //   Author = author;
+    //   Available = true;
+    //   Description = description;
+    //   Id = id;
+    // }
+
     //Properties
 
     [Required]

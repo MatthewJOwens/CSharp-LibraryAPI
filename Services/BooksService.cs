@@ -36,14 +36,18 @@ namespace LibraryAPI.Services
       return _repo.Delete(id);
     }
 
-    internal object Update(Book updatedBook)
+    internal Book Update(int id, Book updatedBook)
     {
-      Book bookToUpdate = GetById(updatedBook.Id);
+      Book bookToUpdate = GetById(id);
       if (bookToUpdate == null)
       {
         throw new Exception("Invalid ID");
       }
-      return _repo.Update(updatedBook);
+      bookToUpdate.Available = updatedBook.Available;
+      bookToUpdate.Title = updatedBook.Title;
+      bookToUpdate.Description = updatedBook.Description;
+      bookToUpdate.Author = updatedBook.Author;
+      return _repo.Update(bookToUpdate);
     }
   }
 }

@@ -62,7 +62,7 @@ namespace LibraryAPI
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Book> Edit([FromBody] Book updatedBook)
+    public ActionResult<Book> Edit(int id, [FromBody] Book updatedBook)
     {
       try
       {
@@ -73,7 +73,7 @@ namespace LibraryAPI
         // bookToUpdate.Author = updatedBook.Author == null ? bookToUpdate.Author : updatedBook.Author;
         // //NOTE this says it will always be false because bool can't be null, but what is it if it's not included and not required?
         // bookToUpdate.Available = updatedBook.Available == null ? bookToUpdate.Available : updatedBook.Available;
-        return Ok(_bs.Update(updatedBook));
+        return Ok(_bs.Update(id, updatedBook));
       }
       catch (System.Exception err)
       {

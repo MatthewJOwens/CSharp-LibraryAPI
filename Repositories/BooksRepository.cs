@@ -46,18 +46,15 @@ namespace LibraryAPI.Repositories
     internal Book Update(Book updatedBook)
     {
       string sql = @"
-      UPDATE books
-      SET title = @Title, author = @Author, available = @Available
-      WHERE id = @Id";
-      int affectedRows = _db.Execute(sql, updatedBook);
-      if (affectedRows == 1)
-      {
-        return updatedBook;
-      }
-      else
-      {
-        throw new Exception("Error updating book.");
-      }
+        UPDATE books
+        SET 
+          title = @Title, 
+          author = @Author, 
+          available = @Available, 
+          description = @Description
+        WHERE id = @Id";
+      _db.Execute(sql, updatedBook);
+      return updatedBook;
     }
   }
 }
