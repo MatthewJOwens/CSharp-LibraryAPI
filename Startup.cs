@@ -33,6 +33,10 @@ namespace LibraryAPI
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
       services.AddTransient<BooksService>();
       services.AddTransient<BooksRepository>();
+      services.AddTransient<TagsService>();
+      services.AddTransient<TagsRepository>();
+      services.AddTransient<TagBooksService>();
+      services.AddTransient<TagBooksRepository>();
     }
 
     private IDbConnection CreateDbConnection()

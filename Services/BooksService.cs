@@ -20,6 +20,10 @@ namespace LibraryAPI.Services
     {
       return _repo.GetById(bookId);
     }
+    internal IEnumerable<TagBookViewModel> GetBooksByTagId(int id)
+    {
+      return _repo.GetBooksByTagId(id);
+    }
 
     internal Book Add(Book newBook)
     {
@@ -49,5 +53,6 @@ namespace LibraryAPI.Services
       bookToUpdate.Author = updatedBook.Author;
       return _repo.Update(bookToUpdate);
     }
+
   }
 }

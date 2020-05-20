@@ -12,6 +12,7 @@ namespace LibraryAPI.Repositories
     {
       _db = db;
     }
+    //comments go here
     internal IEnumerable<Book> GetAll()
     {
       string sql = "SELECT * FROM books";
@@ -22,6 +23,20 @@ namespace LibraryAPI.Repositories
     {
       string sql = "SELECT * FROM books WHERE id = @Id";
       return _db.QueryFirstOrDefault<Book>(sql, new { id });
+    }
+
+    internal IEnumerable<TagBookViewModel> GetBooksByTagId(int tagId)
+    {
+      string sql = @"
+      SELECT 
+      b.*,
+      t.name AS Tag,
+      tb.id AS TagBlogId
+      FROM tagbooks tb
+      INNER JOIN books b ON b.id = tb.bookId
+      INNER JOIN tags t ON t.id = tb.tagId
+      WHERE tagId = @TagId";
+      return _db.Query<TagBookViewModel>(sql, new { tagId });
     }
 
     internal Book Add(Book newBook)

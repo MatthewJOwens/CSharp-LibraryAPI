@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using LibraryAPI.DB;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 

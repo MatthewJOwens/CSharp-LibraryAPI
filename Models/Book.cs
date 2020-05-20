@@ -31,4 +31,9 @@ namespace LibraryAPI
     public bool Available { get; set; }
     public int Id { get; set; }
   }
+  public class TagBookViewModel : Book
+  {
+    public int TagBookId { get; set; }
+    public string Tag { get; set; }
+  }
 }
