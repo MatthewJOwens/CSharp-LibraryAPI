@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using LibraryAPI.Models;
@@ -10,6 +11,13 @@ namespace LibraryAPI.Repositories
     public TagBooksRepository(IDbConnection db)
     {
       _db = db;
+    }
+    internal IEnumerable<TagBook> GetAll()
+    {
+      string sql = @"
+      SELECT *
+      FROM tagbooks";
+      return _db.Query<TagBook>(sql);
     }
 
     internal TagBook Create(TagBook newTagBook)
@@ -26,7 +34,7 @@ namespace LibraryAPI.Repositories
 
     internal bool Delete(int id)
     {
-      string sql = "DELETE FROM tagblogs WHERE id = @id LIMIT 1";
+      string sql = "DELETE FROM tagbooks WHERE id = @id LIMIT 1";
       int affectedRows = _db.Execute(sql, new { id });
       return affectedRows == 1;
     }

@@ -15,7 +15,9 @@ namespace LibraryAPI.Models
   public class TagBook
   {
     public int Id { get; set; }
-    public int BlogId { get; set; }
+    [Required]
+    public int BookId { get; set; }
+    [Required]
     public int TagId { get; set; }
   }
 }

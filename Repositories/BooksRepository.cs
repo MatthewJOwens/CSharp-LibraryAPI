@@ -31,7 +31,7 @@ namespace LibraryAPI.Repositories
       SELECT 
       b.*,
       t.name AS Tag,
-      tb.id AS TagBlogId
+      tb.id AS TagBookId
       FROM tagbooks tb
       INNER JOIN books b ON b.id = tb.bookId
       INNER JOIN tags t ON t.id = tb.tagId

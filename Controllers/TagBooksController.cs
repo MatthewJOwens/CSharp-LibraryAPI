@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using LibraryAPI.Models;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,22 @@ namespace LibraryAPI.Controllers
     {
       _tbs = tbs;
     }
+    [HttpGet]
+    public ActionResult<IEnumerable<TagBook>> GetAll()
+    {
+      try
+      {
+        return Ok(_tbs.GetAll());
+      }
+      catch (System.Exception err)
+      {
+        return BadRequest(err.Message);
+      }
+    }
+    // public ActionResult<IEnumerable<TagBook>> GetById(int id)
+    // {
+    //   return _tbs.GetById(id);
+    // }
     [HttpPost]
     public ActionResult<TagBook> Create([FromBody] TagBook newTagBook)
     {
@@ -26,7 +43,7 @@ namespace LibraryAPI.Controllers
         return BadRequest(err.Message);
       }
     }
-    [HttpDelete("{id")]
+    [HttpDelete("{id}")]
     public ActionResult<string> Delete(int id)
     {
       try

@@ -11,9 +11,10 @@ namespace LibraryAPI.Controllers
   {
     private readonly TagsService _ts;
     private readonly BooksService _bs;
-    public TagsController(TagsService ts)
+    public TagsController(TagsService ts, BooksService bs)
     {
       _ts = ts;
+      _bs = bs;
     }
     [HttpGet]
 
@@ -53,7 +54,7 @@ namespace LibraryAPI.Controllers
         return BadRequest(err.Message);
       }
     }
-    [HttpDelete("{id")]
+    [HttpDelete("{id}")]
     public ActionResult<Book> Delete(int id)
     {
       try

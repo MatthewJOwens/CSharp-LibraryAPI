@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using LibraryAPI.Models;
 using LibraryAPI.Repositories;
 
@@ -10,6 +11,10 @@ namespace LibraryAPI.Services
     public TagBooksService(TagBooksRepository repo)
     {
       _repo = repo;
+    }
+    public IEnumerable<TagBook> GetAll()
+    {
+      return _repo.GetAll();
     }
     internal TagBook Create(TagBook newTagBook)
     {
